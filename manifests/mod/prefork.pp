@@ -32,7 +32,10 @@ class apache::mod::prefork (
   # - $serverlimit
   # - $maxclients
   # - $maxrequestsperchild
-  file { "${::apache::mod_dir}/prefork.conf":
+  file { $::osfamily ? {
+    'Suse'  => "${apache::conf_dir}/server-tuning.conf",
+    default => "${apache::mod_dir}/prefork.conf"
+    } :
     ensure  => file,
     content => template('apache/mod/prefork.conf.erb'),
     require => Exec["mkdir ${::apache::mod_dir}"],

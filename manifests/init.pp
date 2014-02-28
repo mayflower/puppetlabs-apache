@@ -242,6 +242,14 @@ class apache (
         $scriptalias          = '/usr/local/www/apache22/cgi-bin'
         $access_log_file      = 'httpd-access.log'
       }
+      'Suse': {
+        $docroot              = '/srv/www'
+        $pidfile              = '${APACHE_PID_FILE}'
+        $error_log            = 'error.log'
+        $error_documents_path = '/usr/share/apache2/error'
+        $scriptalias          = '/srv/www/cgi-bin'
+        $access_log_file      = 'access.log'
+      }
       default: {
         fail("Unsupported osfamily ${::osfamily}")
       }

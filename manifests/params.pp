@@ -200,6 +200,55 @@ class apache::params inherits ::apache::version {
     $fastcgi_lib_path     = undef # TODO: revisit
     $mime_support_package = 'misc/mime-support'
     $mime_types_config    = '/usr/local/etc/mime.types'
+  } elsif $::osfamily == 'Suse' {
+    $user                 = 'wwwrun'
+    $group                = 'www'
+    $root_group           = 'root'
+    $apache_name          = 'apache2'
+    $service_name         = 'apache2'
+    $httpd_dir            = '/etc/apache2'
+    $server_root          = '/etc/apache2'
+    $conf_dir             = $httpd_dir
+    $confd_dir            = "${httpd_dir}/conf.d"
+    $mod_dir              = "${httpd_dir}/mods-available"
+    $mod_enable_dir       = undef
+    $vhost_dir            = "${httpd_dir}/vhosts.d"
+    $vhost_enable_dir     = undef
+    $conf_file            = 'httpd.conf'
+    $ports_file           = "${conf_dir}/ports.conf"
+    $logroot              = '/var/log/apache2'
+    $lib_path             = $::architecture ? {
+      'x86_64' => '/usr/lib64/apache2/',
+      'i386'   => '/usr/lib64/apache2/',
+      default  => fail("Class['apache::params']: Unsupported architecture: ${::architecture}")
+    }
+    $mpm_module           = 'prefork'
+    $dev_packages         = ['libaprutil1-dev', 'libapr1-dev', 'apache2-prefork-dev']
+    $default_ssl_cert     = '/etc/ssl/certs/ssl-cert-snakeoil.pem'
+    $default_ssl_key      = '/etc/ssl/private/ssl-cert-snakeoil.key'
+    $ssl_certs_dir        = '/etc/ssl/certs'
+    $passenger_conf_file  = 'passenger.conf'
+    $passenger_conf_package_file = undef
+    $passenger_root       = '/usr'
+    $passenger_ruby       = '/usr/bin/ruby'
+    $suphp_addhandler     = 'x-httpd-php'
+    $suphp_engine         = 'off'
+    $suphp_configpath     = '/etc/php5/apache2'
+    $mod_packages         = {
+      'fcgid'       => 'apache2-mod_fcgid',
+      'perl'        => 'apache2-mod_perl',
+      'php5'        => 'apache2-mod_php5',
+      'python'      => 'apache2-mod_python',
+    }
+    $mod_libs             = {
+      'php5' => 'libphp5.so',
+    }
+    $conf_template        = 'apache/httpd.conf.erb'
+    $keepalive            = 'Off'
+    $keepalive_timeout    = 15
+    $fastcgi_lib_path     = '/var/lib/apache2/fastcgi'
+    $mime_support_package = 'shared-mime-info'
+    $mime_types_config    = '/etc/mime.types'
   } else {
     fail("Class['apache::params']: Unsupported osfamily: ${::osfamily}")
   }

@@ -7,7 +7,7 @@ class apache::default_mods (
   # They are not configurable at this time, so we just include
   # them to make sure it works.
   case $::osfamily {
-    'redhat', 'freebsd': {
+    'redhat', 'freebsd', 'Suse': {
       ::apache::mod { 'log_config': }
     }
     default: {}
