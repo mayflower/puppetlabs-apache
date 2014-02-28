@@ -66,6 +66,8 @@ class apache::mod::prefork (
         apache_version => $apache_version,
       }
     }
+    'Suse': {
+    }
     default: {
       fail("Unsupported osfamily ${::osfamily}")
     }
