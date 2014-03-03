@@ -241,7 +241,6 @@ class apache::params inherits ::apache::version {
       'python'      => 'apache2-mod_python',
     }
     $mod_libs             = {
-      'php5' => 'libphp5.so',
     }
     $conf_template        = 'apache/httpd.conf.erb'
     $keepalive            = 'Off'
